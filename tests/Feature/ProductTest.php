@@ -63,6 +63,14 @@ class ProductTest extends TestCase
     {
         $product = $this->creator->createProduct();
 
-        dd($product);
+        $this->actingAs($this->user)->json('GET', '/api/products/' . $product->id)
+            ->assertOk()
+            ->assertJson([
+               'id' => $product->id,
+               'category_id' => $product->category_id,
+               'name' => $product->name,
+               'description' => $product->description,
+               'price' => $product->price
+            ]);
     }
 }
