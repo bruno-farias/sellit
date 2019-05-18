@@ -5,6 +5,8 @@ namespace Tests\Helpers;
 
 
 use App\Category;
+use App\Order;
+use App\OrderProduct;
 use App\Product;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -39,5 +41,25 @@ class Creator
     public function removeRandomArrayItem(array $array): array
     {
         return array_slice($array, rand(0, count($array)), 1);
+    }
+
+    public function createOrder(array $params): Order
+    {
+        return factory(Order::class)->create($params);
+    }
+
+    public function createOrderWithProducts(array $params, int $items = 1): Order
+    {
+        $order = factory(Order::class)->create($params);
+
+        Collection::times($items, function () use ($order) {
+            $product = factory(Product::class)->create();
+            return factory(OrderProduct::class)->create([
+                'order_id' => $order->id,
+                'product_id' => $product->id
+            ]);
+        });
+
+        return $order;
     }
 }

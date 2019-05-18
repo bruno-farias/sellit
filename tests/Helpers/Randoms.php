@@ -41,4 +41,9 @@ class Randoms
         return $this->generator->randomFloat(2, 0, 9999);
     }
 
+    public function notes()
+    {
+        return $this->generator->text;
+    }
+
 }
