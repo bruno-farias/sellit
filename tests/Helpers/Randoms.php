@@ -31,4 +31,14 @@ class Randoms
         return $this->generator->password;
     }
 
+    public function description()
+    {
+        return $this->generator->text;
+    }
+
+    public function price()
+    {
+        return $this->generator->randomFloat();
+    }
+
 }

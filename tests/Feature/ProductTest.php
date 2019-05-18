@@ -25,7 +25,14 @@ class ProductTest extends TestCase
 
     public function testUserCanCreateProduct()
     {
-        $product = [];
+        $category = $this->creator->createCategory();
+        $product = [
+            'category_id' => $category->id,
+            'name' => $this->randoms->name(),
+            'description' => $this->randoms->description(),
+            'price' => $this->randoms->price()
+
+        ];
         $this->actingAs($this->user)->json('POST', '/api/products', $product)
             ->assertOk();
 
