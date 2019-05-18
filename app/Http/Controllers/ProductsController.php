@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductStore;
 use App\Product;
 use App\Services\ProductsService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -18,22 +19,18 @@ class ProductsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         //
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ProductStore $request
+     * @return JsonResponse
      */
-    public function store(ProductStore $request)
+    public function store(ProductStore $request): JsonResponse
     {
         $payload = $request->only([
             'name',
@@ -47,46 +44,29 @@ class ProductsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param Product $product
-     * @return void
+     * @return JsonResponse
      */
-    public function show(Product $product)
+    public function show(Product $product): JsonResponse
     {
         //
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
+     * @param Request $request
      * @param Product $product
-     * @return void
+     * @return JsonResponse
      */
-    public function edit(Product $product)
+    public function update(Request $request, Product $product): JsonResponse
     {
         //
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
      * @param Product $product
-     * @return void
+     * @return JsonResponse
      */
-    public function update(Request $request, Product $product)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Product $product
-     * @return void
-     */
-    public function destroy(Product $product)
+    public function destroy(Product $product): JsonResponse
     {
         //
     }

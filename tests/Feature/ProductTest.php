@@ -31,10 +31,15 @@ class ProductTest extends TestCase
             'name' => $this->randoms->name(),
             'description' => $this->randoms->description(),
             'price' => $this->randoms->price()
-
         ];
-        $this->actingAs($this->user)->json('POST', '/api/products', $product)
-            ->assertOk();
 
+        $this->actingAs($this->user)->json('POST', '/api/products', $product)
+            ->assertOk()
+            ->assertJson([
+                'category_id' => $category->id,
+                'name' => $product['name'],
+                'description' => $product['description'],
+                'price' => $product['price']
+            ]);
     }
 }

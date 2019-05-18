@@ -1,7 +1,0 @@
-build:
-  nodes:
-    my-tests:
-      environment:
-        variables:
-          JWT_SECRET: iFMs04hnM8RoUBQYxAudvMZVfOoMT0REnwo5KheiuEjfPspf4joXigoxkU6nRApf
-

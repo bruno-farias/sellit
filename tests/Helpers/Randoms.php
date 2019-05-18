@@ -38,7 +38,7 @@ class Randoms
 
     public function price()
     {
-        return $this->generator->randomFloat();
+        return $this->generator->randomFloat(2, 0, 999999);
     }
 
 }

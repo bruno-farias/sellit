@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Requests\CategoryStore;
 use App\Http\Requests\CategoryUpdate;
 use App\Services\CategoryService;
+use Illuminate\Http\JsonResponse;
 
 class CategoriesController extends Controller
 {
@@ -19,15 +20,14 @@ class CategoriesController extends Controller
         $this->categoryService = $categoryService;
     }
 
-
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        $categories =  Category::all();
+        $categories = Category::all();
         return response()->json($categories);
     }
 
@@ -36,7 +36,7 @@ class CategoriesController extends Controller
      * @param CategoryStore $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(CategoryStore $request)
+    public function store(CategoryStore $request): JsonResponse
     {
         $name = $request->get('name');
         $category = $this->categoryService->create($name);
@@ -48,21 +48,19 @@ class CategoriesController extends Controller
      * Display the specified resource.
      *
      * @param Category $category
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Category $category)
+    public function show(Category $category): JsonResponse
     {
         return response()->json($category);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param CategoryUpdate $request
+     * @param Category $category
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(CategoryUpdate $request, Category $category)
+    public function update(CategoryUpdate $request, Category $category): JsonResponse
     {
         $name = $request->get('name');
         $category = $this->categoryService->update($category, $name);
@@ -71,12 +69,10 @@ class CategoriesController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category): JsonResponse
     {
         if ($this->categoryService->destroy($category)) {
             return response()->json([]);
