@@ -46,4 +46,9 @@ class Randoms
         return $this->generator->text;
     }
 
+    public function quantity()
+    {
+        return $this->generator->randomNumber();
+    }
+
 }

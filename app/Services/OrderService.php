@@ -11,16 +11,16 @@ class OrderService
     /**
      * @var Order
      */
-    private $model;
+    private $order;
 
     public function __construct(Order $order)
     {
-        $this->model = $order;
+        $this->order = $order;
     }
 
-    public function create(array $payload): Order
+    public function store(array $payload): Order
     {
-        $order = $this->model->create($payload);
+        $order = $this->order->create($payload);
         $order->save();
 
         return $order;

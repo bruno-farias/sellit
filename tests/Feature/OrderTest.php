@@ -54,19 +54,18 @@ class OrderTest extends TestCase
             ->assertStatus(422);
     }
 
-    public function testUserCanSeeOrder()
+    public function testUserCanSeeOrderWIthProducts()
     {
-        $order = $this->creator->createOrder([
-            'user_id' => $this->user->id,
-            'customer_id' => $this->customer->id
-        ]);
+        $order = $this->getOrder();
+
+        $expected = $order->with('orderProducts')->find($order->id);
 
         $this->actingAs($this->user)->json('GET', '/api/orders/' . $order->id)
             ->assertOk()
-            ->assertJson($order->toArray());
+            ->assertJson($expected->toArray());
     }
 
-    public function testUserCanSeeOrderWithProducts()
+    public function testUserCanSeeAllOrdersWithProducts()
     {
         $items = rand(1, 10);
         /** @var Order $order */
@@ -84,10 +83,7 @@ class OrderTest extends TestCase
 
     public function testUserCanEditOrder()
     {
-        $order = $this->creator->createOrder([
-            'user_id' => $this->user->id,
-            'customer_id' => $this->customer->id
-        ]);
+        $order = $this->getOrder();
 
         $orderData = [
             'id' => $order->id,
@@ -103,10 +99,7 @@ class OrderTest extends TestCase
 
     public function testUserCantEditOrderWithMissingParameters()
     {
-        $order = $this->creator->createOrder([
-            'user_id' => $this->user->id,
-            'customer_id' => $this->customer->id
-        ]);
+        $order = $this->getOrder();
 
         $orderData = [
             'id' => $order->id,
@@ -123,13 +116,39 @@ class OrderTest extends TestCase
 
     public function testUserCanDeleteOrder()
     {
-        $order = $this->creator->createOrder([
-            'user_id' => $this->user->id,
-            'customer_id' => $this->customer->id
-        ]);
+        $order = $this->getOrder();
 
         $this->actingAs($this->user)->json('DELETE', '/api/orders/' . $order->id)
             ->assertOk()
             ->assertJson([]);
+    }
+
+    public function testUserCanAddProductsToOrder()
+    {
+        $order = $this->getOrder();
+        $product = $this->creator->createProduct();
+
+        $payload = [
+            'order_id' => $order->id,
+            'product_id' => $product->id,
+            'price' => $this->randoms->price(),
+            'quantity' => $this->randoms->quantity()
+        ];
+
+        $this->actingAs($this->user)->json('POST', '/api/order-products', $payload)
+            ->assertOk()
+            ->assertJson($payload);
+    }
+
+    /**
+     * @return Order
+     */
+    private function getOrder(): Order
+    {
+        $order = $this->creator->createOrder([
+            'user_id' => $this->user->id,
+            'customer_id' => $this->customer->id
+        ]);
+        return $order;
     }
 }

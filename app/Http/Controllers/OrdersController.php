@@ -41,7 +41,7 @@ class OrdersController extends Controller
             'notes',
         ]);
 
-        $order = $this->orderService->create($payload);
+        $order = $this->orderService->store($payload);
 
         return response()->json($order);
     }
@@ -57,6 +57,7 @@ class OrdersController extends Controller
      */
     public function show(Order $order): JsonResponse
     {
+        $order = $order->with('orderProducts')->find($order->id);
         return response()->json($order);
     }
 
