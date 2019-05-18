@@ -25,7 +25,11 @@ class OrdersController extends Controller
      */
     public function index(): JsonResponse
     {
-        $orders = Order::with('orderProducts')->get();
+        $orders = Order::with([
+            'orderProducts.product',
+            'user',
+            'customer'
+        ])->get();
         return response()->json($orders);
     }
 

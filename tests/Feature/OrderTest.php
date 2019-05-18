@@ -65,7 +65,7 @@ class OrderTest extends TestCase
             ->assertJson($expected->toArray());
     }
 
-    public function testUserCanSeeAllOrdersWithProducts()
+    public function testUserCanSeeAllOrdersWithRelations()
     {
         $items = rand(1, 10);
         /** @var Order $order */
@@ -74,7 +74,11 @@ class OrderTest extends TestCase
             'customer_id' => $this->customer->id
         ], $items);
 
-        $expected = $order->with('orderProducts')->get();
+        $expected = $order->with([
+            'orderProducts.product',
+            'user',
+            'customer'
+        ])->get();
 
         $this->actingAs($this->user)->json('GET', '/api/orders/')
             ->assertOk()
