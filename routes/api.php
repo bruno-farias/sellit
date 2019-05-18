@@ -21,5 +21,6 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
     Route::post('me', 'AuthController@me');
 });
 Route::middleware(['jwt.auth'])->group(function () {
-    // todo
+    Route::resource('categories', 'CategoriesController')->except('create', 'edit');
+    Route::resource('products', 'ProductsController')->except('create', 'edit');
 });

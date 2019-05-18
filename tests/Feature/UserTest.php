@@ -7,15 +7,12 @@ use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\Helpers\Creator;
 use Tests\TestCase;
-use Faker\Factory;
-use Faker\Generator;
 
 class UserTest extends TestCase
 {
     use DatabaseMigrations;
 
-    /** @var Generator $faker */
-    private $faker;
+
     /** @var Creator $creator */
     private $creator;
     /** @var User $user */
@@ -24,7 +21,6 @@ class UserTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->faker = Factory::create();
         $this->creator = new Creator();
         $this->user = $this->creator->createUser();
     }
@@ -49,6 +45,19 @@ class UserTest extends TestCase
             'name' => $userData['name'],
             'email' => $userData['email']
         ]);
+    }
+
+    public function testUserCantRegisterMissingParameters()
+    {
+        $userData = [
+            'name' => $this->randoms->name(),
+            'email' => $this->randoms->email(),
+            'password' => $this->randoms->password()
+        ];
+        $userData = array_slice($userData, rand(0, count($userData)), 1);
+
+        $this->json('POST', '/api/auth/register', $userData)
+            ->assertStatus(422);
     }
 
     public function testUserCanLogin()
