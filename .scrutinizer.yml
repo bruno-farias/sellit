@@ -1,11 +1,31 @@
 build:
   nodes:
-    my-tests:
-      environment:
-        php:
-          version: 7.2
-      override:
-        - command: phpunit --coverage-clover=my-coverage-file
-          coverage:
-            file: my-coverage-file
-            format: php-clover
+    analysis:
+      project_setup:
+        override:
+          - 'true'
+      tests:
+        environment:
+          php:
+            version: 7.2
+          override:
+            - command: phpunit --coverage-clover=my-coverage-file
+              coverage:
+                file: my-coverage-file
+                format: php-clover
+    tests: true
+filter:
+  paths:
+    - 'app/*'
+  excluded_paths:
+    - 'app/views/*'
+    - 'app/config/*'
+    - 'app/database/*'
+checks:
+  php: true
+  javascript: true
+coding_style:
+  php:
+    spaces:
+      within:
+        brackets: true
