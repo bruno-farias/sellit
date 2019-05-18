@@ -140,6 +140,43 @@ class OrderTest extends TestCase
             ->assertJson($payload);
     }
 
+    public function testUserCanUpdateProductsAttachedToOrder()
+    {
+        $order = $this->creator->createOrderWithProducts([
+            'user_id' => $this->user->id,
+            'customer_id' => $this->customer->id
+        ]);
+
+        $orderProduct = $order->orderProducts->first();
+
+        $product = $this->creator->createProduct();
+
+        $payload = [
+            'id' => $orderProduct->id,
+            'order_id' => $order->id,
+            'product_id' => $product->id,
+            'price' => $this->randoms->price(),
+            'quantity' => $this->randoms->quantity()
+        ];
+
+        $this->actingAs($this->user)->json('PUT', '/api/order-products/' . $orderProduct->id, $payload)
+            ->assertOk()
+            ->assertJson($payload);
+    }
+
+    public function testUserCanDeleteProductFromOrder()
+    {
+        $order = $this->creator->createOrderWithProducts([
+            'user_id' => $this->user->id,
+            'customer_id' => $this->customer->id
+        ]);
+
+        $orderProduct = $order->orderProducts->first();
+        $this->actingAs($this->user)->json('DELETE', '/api/order-products/' . $orderProduct->id)
+            ->assertOk()
+            ->assertJson([]);
+    }
+
     /**
      * @return Order
      */

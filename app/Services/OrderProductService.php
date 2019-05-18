@@ -24,4 +24,20 @@ class OrderProductService
         return $orderProduct;
     }
 
+    public function update(OrderProduct $orderProduct, array $params): OrderProduct
+    {
+        $orderProduct->update($params);
+        $orderProduct->save();
+
+        return $orderProduct;
+    }
+
+    public function destroy(OrderProduct $orderProduct): OrderProduct
+    {
+        $orderProduct->delete();
+        $orderProduct->save();
+
+        return $orderProduct;
+    }
+
 }
