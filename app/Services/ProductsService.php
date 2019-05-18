@@ -24,5 +24,19 @@ class ProductsService
         return $product;
     }
 
+    public function update(Product $product, array $params): Product
+    {
+        $product->update($params);
+        $product->save();
+
+        return $product;
+    }
+
+    public function destroy(Product $product): Product
+    {
+        $product->delete();
+        return $product;
+    }
+
 
 }

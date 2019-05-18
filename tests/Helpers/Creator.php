@@ -30,4 +30,14 @@ class Creator
     {
         return factory(Product::class)->create($params);
     }
+
+    public function createProducts(int $quantity = 1): Collection
+    {
+        return factory(Product::class, $quantity)->create();
+    }
+
+    public function removeRandomArrayItem(array $array): array
+    {
+        return array_slice($array, rand(0, count($array)), 1);
+    }
 }

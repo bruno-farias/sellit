@@ -59,6 +59,41 @@ class ProductTest extends TestCase
             ->assertStatus(422);
     }
 
+    public function testUserCanUpdateProduct()
+    {
+        $product = $this->creator->createProduct();
+        $newCategory = $this->creator->createCategory();
+        $productUpdate = [
+            'id' => $product->id,
+            'category_id' => $newCategory->id,
+            'name' => $this->randoms->name(),
+            'description' => $this->randoms->description(),
+            'price' => $this->randoms->price()
+        ];
+
+        $this->actingAs($this->user)->json('PUT', '/api/products/' . $product->id, $productUpdate)
+            ->assertOk()
+            ->assertJson($productUpdate);
+    }
+
+    public function testUserCantUpdateProductWithMissingParameters()
+    {
+        $product = $this->creator->createProduct();
+        $newCategory = $this->creator->createCategory();
+        $productUpdate = [
+            'id' => $product->id,
+            'category_id' => $newCategory->id,
+            'name' => $this->randoms->name(),
+            'description' => $this->randoms->description(),
+            'price' => $this->randoms->price()
+        ];
+
+        $productUpdate = $this->creator->removeRandomArrayItem($productUpdate);
+
+        $this->actingAs($this->user)->json('PUT', '/api/products/' . $product->id, $productUpdate)
+            ->assertStatus(422);
+    }
+
     public function testUserCanSeeProductDetails()
     {
         $product = $this->creator->createProduct();
@@ -66,11 +101,30 @@ class ProductTest extends TestCase
         $this->actingAs($this->user)->json('GET', '/api/products/' . $product->id)
             ->assertOk()
             ->assertJson([
-               'id' => $product->id,
-               'category_id' => $product->category_id,
-               'name' => $product->name,
-               'description' => $product->description,
-               'price' => $product->price
+                'id' => $product->id,
+                'category_id' => $product->category_id,
+                'name' => $product->name,
+                'description' => $product->description,
+                'price' => $product->price
             ]);
+    }
+
+    public function testUserCanGetListOfAllProducts()
+    {
+        $quantity = rand(1, 10);
+        $products = $this->creator->createProducts($quantity);
+
+        $this->actingAs($this->user)->json('GET', '/api/products')
+            ->assertOk()
+            ->assertJson($products->toArray());
+    }
+
+    public function testUserCanDeleteProduct()
+    {
+        $product = $this->creator->createProduct();
+        $this->actingAs($this->user)->json('DELETE', '/api/products/' . $product->id)
+            ->assertOk()
+            ->assertJson([]);
+
     }
 }
