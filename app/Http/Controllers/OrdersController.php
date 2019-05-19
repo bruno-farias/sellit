@@ -39,6 +39,9 @@ class OrdersController extends Controller
      */
     public function store(OrderStore $request): JsonResponse
     {
+        return response()->json([
+            'status' => 'ok'
+        ]);
         $payload = $request->only([
             'user_id',
             'customer_id',

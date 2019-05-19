@@ -20,7 +20,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
 });
-Route::middleware(['jwt.auth'])->group(function () {
+Route::middleware(['jwt.auth', 'cors'])->group(function () {
     Route::resource('categories', 'CategoriesController')->except('create', 'edit');
     Route::resource('products', 'ProductsController')->except('create', 'edit');
     Route::resource('orders', 'OrdersController')->except('create', 'edit');

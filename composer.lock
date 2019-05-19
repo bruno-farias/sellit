@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4d6bc06c421c99e2d3c019c0ee63c88",
+    "content-hash": "a91beeba8813011e1237a7f51a501d6b",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1518,38 +1518,33 @@
             "time": "2018-07-19T23:38:55+00:00"
         },
         {
-            "name": "spatie/laravel-cors",
-            "version": "1.5.0",
+            "name": "resultsystems/laravel-cors",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spatie/laravel-cors.git",
-                "reference": "e20a929637f675fe309f3d4ad28f503d7ff6d266"
+                "url": "https://github.com/resultsystems/laravel-cors.git",
+                "reference": "8f5aae165ea78f94365b2e215b72d14f13ec56ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-cors/zipball/e20a929637f675fe309f3d4ad28f503d7ff6d266",
-                "reference": "e20a929637f675fe309f3d4ad28f503d7ff6d266",
+                "url": "https://api.github.com/repos/resultsystems/laravel-cors/zipball/8f5aae165ea78f94365b2e215b72d14f13ec56ee",
+                "reference": "8f5aae165ea78f94365b2e215b72d14f13ec56ee",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "5.5.*|5.6.*|5.7.*|5.8.*",
-                "php": "^7.2"
-            },
-            "require-dev": {
-                "orchestra/testbench": "3.5.*|3.6.*|3.7.*|3.8.*",
-                "phpunit/phpunit": "^8.0"
+                "php": ">=7.0.0"
             },
             "type": "library",
             "extra": {
                 "laravel": {
                     "providers": [
-                        "Spatie\\Cors\\CorsServiceProvider"
+                        "ResultSystems\\Cors\\CorsServiceProvider"
                     ]
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Spatie\\Cors\\": "src"
+                    "ResultSystems\\Cors\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1558,23 +1553,12 @@
             ],
             "authors": [
                 {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
+                    "name": "Leandro Henrique Reis",
+                    "email": "emtudo@gmail.com"
                 }
             ],
-            "description": "Send CORS headers in a Laravel or Lumen application",
-            "homepage": "https://github.com/spatie/laravel-cors",
-            "keywords": [
-                "ajax",
-                "api",
-                "cors",
-                "laravel-cors",
-                "request",
-                "spatie"
-            ],
-            "time": "2019-04-17T17:03:15+00:00"
+            "description": "Laravel cors",
+            "time": "2018-02-15T12:54:30+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
