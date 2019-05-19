@@ -25,4 +25,6 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::resource('products', 'ProductsController')->except('create', 'edit');
     Route::resource('orders', 'OrdersController')->except('create', 'edit');
     Route::resource('order-products', 'OrderProductsController')->only('store', 'update', 'destroy');
+    Route::get('users/role', 'UsersController@getUsersByRoles');
+    Route::get('users', 'UsersController@index');
 });
